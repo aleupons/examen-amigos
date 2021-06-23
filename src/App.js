@@ -1,214 +1,101 @@
-import { FaStar, FaPencilAlt, FaTimes } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import { Amigos } from "./components/Amigos";
+import { BotonCrear } from "./components/BotonCrear";
+import { Formulario } from "./components/Formulario";
 
 function App() {
+  const urlApi = "http://localhost:3001/amigos/";
+  const [amigos, setAmigos] = useState([]);
+  const [formulario, setFormulario] = useState("none");
+  const [accion, setAccion] = useState("anyadir");
+  const [idAmigo, setIdAmigo] = useState(null);
+
+  const getAmigos = async () => {
+    const response = await fetch(urlApi);
+    if (!response.ok) {
+      return;
+    }
+    const amigos = await response.json();
+    if (amigos) {
+      setAmigos(amigos);
+    }
+  };
+  useEffect(() => {
+    getAmigos();
+  }, []);
+
+  const nuevoAmigo = async (amigoNuevo) => {
+    const response = await fetch(urlApi, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(amigoNuevo),
+    });
+    if (!response.ok) {
+      return;
+    } else {
+      setAmigos([...amigos, amigoNuevo]);
+    }
+  };
+
+  const modificarAmigo = async (amigoAModificar) => {
+    const response = await fetch(urlApi + amigoAModificar.id, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(amigoAModificar),
+    });
+    if (!response.ok) {
+      return;
+    } else {
+      setAmigos(
+        amigos.map((amigo) => {
+          if (amigoAModificar.id === amigo.id) {
+            return amigoAModificar;
+          } else {
+            return amigo;
+          }
+        })
+      );
+    }
+  };
+
+  const borrarAmigo = async (amigoABorrar) => {
+    const response = await fetch(urlApi + amigoABorrar.id, {
+      method: "DELETE",
+    });
+    if (!response.ok) {
+      return;
+    } else {
+      setAmigos(amigos.filter((amigo) => amigoABorrar.id !== amigo.id));
+    }
+  };
+
   return (
     <div className="container">
       <header className="row">
         <h1 className="col-12">Gestión de mis 6 amigos</h1>
-        <div className="col-12">
-          <button type="button" className="btn btn-primary">
-            Crear amigo
-          </button>
-        </div>
+        <BotonCrear setFormulario={setFormulario} setAccion={setAccion} />
         <section className="sidebar col-12">
-          <form className="formulario row">
-            <div className="form-group col-3">
-              <label htmlFor="nombre">Nombre:</label>
-              <input type="text" className="form-control" id="nombre" />
-            </div>
-            <div className="form-group col-3">
-              <label htmlFor="apellido">Apellido:</label>
-              <input type="text" className="form-control" id="apellido" />
-            </div>
-            <div className="form-group col-2">
-              <label htmlFor="valoracion">Valoración:</label>
-              <input
-                type="number"
-                className="form-control"
-                id="valoracion"
-                value="0"
-              />
-            </div>
-            <div className="botonera form-group d-flex flex-column col-4">
-              <button type="submit" className="boton btn btn-primary">
-                Crear
-              </button>
-              <button type="button" className="boton btn btn-primary">
-                Cancelar
-              </button>
-            </div>
-          </form>
+          <Formulario
+            formulario={formulario}
+            accion={accion}
+            amigos={amigos}
+            idAmigo={idAmigo}
+            nuevoAmigo={nuevoAmigo}
+            modificarAmigo={modificarAmigo}
+          />
         </section>
       </header>
       <main className="row">
-        <article className="col-4">
-          <div className="amigo d-flex justify-content-between">
-            <ul className="list-unstyled">
-              <li>Nombre: Juan</li>
-              <li>Apellido: González</li>
-              <li>
-                Valoración:{" "}
-                <i className="estrella">
-                  <FaStar />
-                </i>
-                <i className="estrella">
-                  <FaStar />
-                </i>
-                <i className="estrella">
-                  <FaStar />
-                </i>
-              </li>
-            </ul>
-            <div className="iconos">
-              <i className="editar">
-                <FaPencilAlt />
-              </i>
-              <i className="eliminar">
-                <FaTimes />
-              </i>
-            </div>
-          </div>
-        </article>
-        <article className="col-4">
-          <div className="amigo d-flex justify-content-between">
-            <ul className="list-unstyled">
-              <li>Nombre: Juan</li>
-              <li>Apellido: González</li>
-              <li>
-                Valoración:{" "}
-                <i className="estrella">
-                  <FaStar />
-                </i>
-                <i className="estrella">
-                  <FaStar />
-                </i>
-                <i className="estrella">
-                  <FaStar />
-                </i>
-              </li>
-            </ul>
-            <div className="iconos">
-              <i className="editar">
-                <FaPencilAlt />
-              </i>
-              <i className="eliminar">
-                <FaTimes />
-              </i>
-            </div>
-          </div>
-        </article>
-        <article className="col-4">
-          <div className="amigo d-flex justify-content-between">
-            <ul className="list-unstyled">
-              <li>Nombre: Juan</li>
-              <li>Apellido: González</li>
-              <li>
-                Valoración:{" "}
-                <i className="estrella">
-                  <FaStar />
-                </i>
-                <i className="estrella">
-                  <FaStar />
-                </i>
-                <i className="estrella">
-                  <FaStar />
-                </i>
-              </li>
-            </ul>
-            <div className="iconos">
-              <i className="editar">
-                <FaPencilAlt />
-              </i>
-              <i className="eliminar">
-                <FaTimes />
-              </i>
-            </div>
-          </div>
-        </article>
-        <article className="col-4">
-          <div className="amigo d-flex justify-content-between">
-            <ul className="list-unstyled">
-              <li>Nombre: Juan</li>
-              <li>Apellido: González</li>
-              <li>
-                Valoración:{" "}
-                <i className="estrella">
-                  <FaStar />
-                </i>
-                <i className="estrella">
-                  <FaStar />
-                </i>
-                <i className="estrella">
-                  <FaStar />
-                </i>
-              </li>
-            </ul>
-            <div className="iconos">
-              <i className="editar">
-                <FaPencilAlt />
-              </i>
-              <i className="eliminar">
-                <FaTimes />
-              </i>
-            </div>
-          </div>
-        </article>
-        <article className="col-4">
-          <div className="amigo d-flex justify-content-between">
-            <ul className="list-unstyled">
-              <li>Nombre: Juan</li>
-              <li>Apellido: González</li>
-              <li>
-                Valoración:{" "}
-                <i className="estrella">
-                  <FaStar />
-                </i>
-                <i className="estrella">
-                  <FaStar />
-                </i>
-                <i className="estrella">
-                  <FaStar />
-                </i>
-              </li>
-            </ul>
-            <div className="iconos">
-              <i className="editar">
-                <FaPencilAlt />
-              </i>
-              <i className="eliminar">
-                <FaTimes />
-              </i>
-            </div>
-          </div>
-        </article>
-        <article className="col-4">
-          <div className="amigo d-flex justify-content-between">
-            <ul className="list-unstyled">
-              <li>Nombre: Juan</li>
-              <li>Apellido: González</li>
-              <li>
-                Valoración:{" "}
-                <i className="estrella">
-                  <FaStar />
-                </i>
-                <i className="estrella">
-                  <FaStar />
-                </i>
-                <i className="estrella">
-                  <FaStar />
-                </i>
-              </li>
-            </ul>
-            <div className="iconos">
-              <i className="editar">
-                <FaPencilAlt />
-              </i>
-              <i className="eliminar">
-                <FaTimes />
-              </i>
-            </div>
-          </div>
-        </article>
+        <Amigos
+          amigos={amigos}
+          setIdAmigo={setIdAmigo}
+          setAccion={setAccion}
+          borrarAmigo={borrarAmigo}
+        />
       </main>
     </div>
   );
