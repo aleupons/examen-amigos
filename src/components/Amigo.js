@@ -4,7 +4,7 @@ export const Amigo = (props) => {
   const { amigo, setIdAmigo, setAccion, borrarAmigo, setFormulario } = props;
   const { id, nombre, apellido, valoracion } = amigo;
   const valoracionArray = Array.from(Array(valoracion).keys());
-  setIdAmigo(id);
+
   return (
     <article className="col-4">
       <div className="amigo d-flex justify-content-between">
@@ -25,6 +25,7 @@ export const Amigo = (props) => {
             className="editar"
             onClick={() => {
               setAccion("modificar");
+              setIdAmigo(id);
               setFormulario(true);
             }}
           >

@@ -1,6 +1,5 @@
 export const BotonCrear = (props) => {
   const { setFormulario, setAccion } = props;
-  setAccion("anyadir");
 
   return (
     <div className="col-12">
@@ -9,6 +8,7 @@ export const BotonCrear = (props) => {
         className="btn btn-primary"
         onClick={() => {
           setFormulario(true);
+          setAccion("anyadir");
         }}
       >
         Crear amigo

@@ -84,7 +84,7 @@ function App() {
           {formulario && (
             <Formulario
               formulario={formulario}
-              setformulario={setFormulario}
+              setFormulario={setFormulario}
               accion={accion}
               amigos={amigos}
               idAmigo={idAmigo}
