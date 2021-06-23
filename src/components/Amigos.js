@@ -1,7 +1,7 @@
 import { Amigo } from "./Amigo";
 
 export const Amigos = (props) => {
-  const { amigos, setIdAmigo, setAccion, borrarAmigo } = props;
+  const { amigos, setIdAmigo, setAccion, borrarAmigo, setFormulario } = props;
 
   return (
     <>
@@ -12,6 +12,7 @@ export const Amigos = (props) => {
           setIdAmigo={setIdAmigo}
           setAccion={setAccion}
           borrarAmigo={borrarAmigo}
+          setFormulario={setFormulario}
         />
       ))}
     </>

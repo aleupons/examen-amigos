@@ -1,7 +1,7 @@
 import { FaStar, FaPencilAlt, FaTimes } from "react-icons/fa";
 
 export const Amigo = (props) => {
-  const { amigo, setIdAmigo, setAccion, borrarAmigo } = props;
+  const { amigo, setIdAmigo, setAccion, borrarAmigo, setFormulario } = props;
   const { id, nombre, apellido, valoracion } = amigo;
   const valoracionArray = Array.from(Array(valoracion).keys());
   setIdAmigo(id);
@@ -21,7 +21,13 @@ export const Amigo = (props) => {
           </li>
         </ul>
         <div className="iconos">
-          <i className="editar" onClick={() => setAccion("modificar")}>
+          <i
+            className="editar"
+            onClick={() => {
+              setAccion("modificar");
+              setFormulario(true);
+            }}
+          >
             <FaPencilAlt />
           </i>
           <i className="eliminar" onClick={() => borrarAmigo(amigo)}>

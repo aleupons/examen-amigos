@@ -89,7 +89,7 @@ export const Formulario = (props) => {
           type="button"
           className="boton btn btn-primary"
           onClick={() => {
-            setFormulario("");
+            setFormulario(false);
           }}
         >
           Cancelar

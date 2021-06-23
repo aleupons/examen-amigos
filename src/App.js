@@ -6,7 +6,7 @@ import { Formulario } from "./components/Formulario";
 function App() {
   const urlApi = "http://localhost:3001/amigos/";
   const [amigos, setAmigos] = useState([]);
-  const [formulario, setFormulario] = useState("none");
+  const [formulario, setFormulario] = useState(false);
   const [accion, setAccion] = useState("anyadir");
   const [idAmigo, setIdAmigo] = useState(null);
 
@@ -79,15 +79,17 @@ function App() {
         <h1 className="col-12">Gestión de mis 6 amigos</h1>
         <BotonCrear setFormulario={setFormulario} setAccion={setAccion} />
         <section className="sidebar col-12">
-          <Formulario
-            formulario={formulario}
-            setformulario={setFormulario}
-            accion={accion}
-            amigos={amigos}
-            idAmigo={idAmigo}
-            nuevoAmigo={nuevoAmigo}
-            modificarAmigo={modificarAmigo}
-          />
+          {formulario && (
+            <Formulario
+              formulario={formulario}
+              setformulario={setFormulario}
+              accion={accion}
+              amigos={amigos}
+              idAmigo={idAmigo}
+              nuevoAmigo={nuevoAmigo}
+              modificarAmigo={modificarAmigo}
+            />
+          )}
         </section>
       </header>
       <main className="row">
@@ -96,6 +98,7 @@ function App() {
           setIdAmigo={setIdAmigo}
           setAccion={setAccion}
           borrarAmigo={borrarAmigo}
+          setFormulario={setFormulario}
         />
       </main>
     </div>

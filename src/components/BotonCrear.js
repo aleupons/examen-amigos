@@ -8,7 +8,7 @@ export const BotonCrear = (props) => {
         type="button"
         className="btn btn-primary"
         onClick={() => {
-          setFormulario("");
+          setFormulario(false);
         }}
       >
         Crear amigo
