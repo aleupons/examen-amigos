@@ -81,6 +81,7 @@ function App() {
         <section className="sidebar col-12">
           <Formulario
             formulario={formulario}
+            setformulario={setFormulario}
             accion={accion}
             amigos={amigos}
             idAmigo={idAmigo}

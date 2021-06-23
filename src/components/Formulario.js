@@ -1,8 +1,15 @@
 import { useEffect, useState } from "react";
 
 export const Formulario = (props) => {
-  const { formulario, accion, amigos, idAmigo, nuevoAmigo, modificarAmigo } =
-    props;
+  const {
+    formulario,
+    setFormulario,
+    accion,
+    amigos,
+    idAmigo,
+    nuevoAmigo,
+    modificarAmigo,
+  } = props;
 
   const idMasAlta = amigos.reduce((acumulador, amigo) => {
     if (amigo.id > acumulador) {
@@ -78,7 +85,13 @@ export const Formulario = (props) => {
         <button type="submit" className="boton btn btn-primary">
           Crear
         </button>
-        <button type="button" className="boton btn btn-primary">
+        <button
+          type="button"
+          className="boton btn btn-primary"
+          onClick={() => {
+            setFormulario("");
+          }}
+        >
           Cancelar
         </button>
       </div>
