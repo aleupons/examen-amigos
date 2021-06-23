@@ -77,7 +77,9 @@ function App() {
     <div className="container">
       <header className="row">
         <h1 className="col-12">Gestión de mis 6 amigos</h1>
-        <BotonCrear setFormulario={setFormulario} setAccion={setAccion} />
+        {!formulario && (
+          <BotonCrear setFormulario={setFormulario} setAccion={setAccion} />
+        )}
         <section className="sidebar col-12">
           {formulario && (
             <Formulario
